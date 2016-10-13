@@ -5,12 +5,20 @@ $(document).ready(function(){
   $('#weatherLocation').submit(function(event) {
     event.preventDefault();
     var city = $('#location').val();
-    $('#location').val("");
+
     $('#displayed-city').text("current city: " + city);
-    $.get('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + apiKey, function(response) {
-      console.log(response);
-    });
   });
+
+  $('#display-temp').click(function() {
+
+      var city = $('#location').val();
+      $('#location').val("");
+      $.get('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + apiKey, function(response) {
+
+        console.log(response);
+
+      });
+    });
 });
 
 },{}]},{},[1]);
