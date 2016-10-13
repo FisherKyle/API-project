@@ -4,7 +4,46 @@ exports.apiKey = "e3d4cbe8659a1b94a731db31bd8f0d46";
 },{}],2:[function(require,module,exports){
 var apiKey = require('./../.env').apiKey;
 
+function Weather(){
+}
+
+//temperature prototype
+Weather.prototype.getTempKelvin = function(city) {
+  $.get('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + apiKey).then(function(response) {
+    $('#displayed-temp-text').text("current temp: " + response.main.temp + " kelvin");
+
+  }).fail(function(error) {
+    $('#displayed-temp-text').text(error.responseJSON.message);
+
+  }); // Approach #1 for displaying data from a function
+}
+
+//humidity prototype
+Weather.prototype.getHumidityPercent = function(city, displayFunction) {
+  $.get('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + apiKey).then(function(response) {
+
+    displayFunction(response.main.humidity);
+
+  }).fail(function(error) {
+    $('#displayed-humidity-text').text(error.responseJSON.message);
+
+  }); // Approach #2 (preferred) for displaying data from a function
+}
+
+
+exports.weatherModule = Weather;
+
+},{"./../.env":1}],3:[function(require,module,exports){
+
+var Weather = require('./../js/weather.js').weatherModule;
+
+var displayHumidity = function(humidityData) {
+  $('#displayed-humidity-text').text("current humidity: " + humidityData + "%"); // Approach #2 (preferred) for displaying data from a function
+}
 $(document).ready(function(){
+  //
+  var currentWeatherObject = new Weather();
+
   $('#weatherLocation').submit(function(event) {
     event.preventDefault();
     var city = $('#location').val();
@@ -13,28 +52,20 @@ $(document).ready(function(){
     $('#showWeatherOptions').show();
   }); //end submit
 
-  $('#display-temp').click(function() {
+//  ============================= temp ============================= //
+  $('#display-temp').click(function(){
     var city = $('#location').val();
-    $.get('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + apiKey).then(function(response) {
+    currentWeatherObject.getTempKelvin(city); // Approach #1 for displaying data from a function
 
-      $('#displayed-temp-text').text("current temp: " + response.main.temp + " kelvin");
-    }).fail(function(error) {
-      $('#displayed-temp-text').text(error.responseJSON.message);
-
-    });
   });
 
-  $('#display-humidity').click(function() {
+//  ========================== humidity =========================== //
+
+  $('#display-humidity').click(function(){
     var city = $('#location').val();
-    $.get('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + apiKey).then(function(response) {
-
-      $('#displayed-humidity-text').text("current humidity: " + response.main.humidity + "%");
-    }).fail(function(error) {
-      $('#displayed-humidity-text').text(error.responseJSON.message);
-
-    });
+    currentWeatherObject.getHumidityPercent(city, displayHumidity); // Approach #2 (preferred) for displaying data from a function
   });
 
 }); //end ready
 
-},{"./../.env":1}]},{},[2]);
+},{"./../js/weather.js":2}]},{},[3]);
