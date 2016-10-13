@@ -7,18 +7,27 @@ $(document).ready(function(){
     var city = $('#location').val();
 
     $('#displayed-city').text("current city: " + city);
-  });
+    $('#showWeatherOptions').show();
+  }); //end submit
 
   $('#display-temp').click(function() {
+    var city = $('#location').val();
+    $.get('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + apiKey, function(response) {
 
-      var city = $('#location').val();
-      $('#location').val("");
-      $.get('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + apiKey, function(response) {
+      console.log("current temp: " + response.main.temp + " kelvin");
 
-        console.log(response);
-
-      });
     });
-});
+  });
+
+  $('#display-humidity').click(function() {
+    var city = $('#location').val();
+    $.get('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + apiKey, function(response) {
+
+      console.log("current humidity: " + response.main.humidity + "%");
+
+    });
+  });
+
+}); //end ready
 
 },{}]},{},[1]);
