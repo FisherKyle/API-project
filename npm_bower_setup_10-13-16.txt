@@ -62,7 +62,7 @@ gulp.task('jsBrowserify', function() {
 -------------------
 Generate the 'build' folder:
 
-$ gulp jsBrowserify.
+$ gulp jsBrowserify
 -------------------
 
 UPDATE <script> tags:
@@ -490,3 +490,36 @@ gulp.task('htmlBuild', function() {
 
 =============================== API SETUP ===============================
 https://www.learnhowtoprogram.com/javascript/modern-js-apps/using-an-api
+
+============================ SKELETON PROJECT ============================
+
+1. If working on personal computer or new non-Epicodus machine:
+$ brew install node 
+$ npm install bower -g
+$ npm install gulp -g
+
+Further Reading (i.e. brew install node): https://www.learnhowtoprogram.com/javascript/getting-started-with-javascript-2f9a73dc-b7f5-4a22-9101-e69d49f552ac/installing-node-js
+
+When you already have an existing gulpfile.js, you can avoid individually installing each.
+
+You’ll have:
+- gulpfile.js
+- package.json -> keeps track of back-end dependencies (gulp packages)
+- bower.json -> keeps track of bower packages (front-end)
+- .gitignore
+- js/ (folder) with an -interface.js file (so that we can create a tmp folder and not have errors)
+- README.md (remember to link to gh-pages)
+- index.html
+
+Note: if you do not have an existing package.json or bower.json, you can run ‘npm init’ or ‘bower init’ to create those respective files.
+
+2. Once you have all of these ingredients:
+
+[RUN]:
+$ npm install
+$ bower install
+$ gulp build
+$ gulp serve
+
+Reference: https://github.com/FisherKyle/API-project.git
+
