@@ -11,7 +11,7 @@ $(document).ready(function(){
 
   $('#display-temp').click(function() {
     var city = $('#location').val();
-    $.get('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + apiKey, function(response) {
+    $.get('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + apiKey).then(function(response) {
 
       console.log("current temp: " + response.main.temp + " kelvin");
 
@@ -20,7 +20,7 @@ $(document).ready(function(){
 
   $('#display-humidity').click(function() {
     var city = $('#location').val();
-    $.get('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + apiKey, function(response) {
+    $.get('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + apiKey).then(function(response) {
 
       console.log("current humidity: " + response.main.humidity + "%");
 
