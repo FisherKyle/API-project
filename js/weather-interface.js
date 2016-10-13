@@ -1,4 +1,4 @@
-var apiKey = "e3d4cbe8659a1b94a731db31bd8f0d46";
+var apiKey = require('./../.env').apiKey;
 
 $(document).ready(function(){
   $('#weatherLocation').submit(function(event) {
@@ -13,7 +13,9 @@ $(document).ready(function(){
     var city = $('#location').val();
     $.get('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + apiKey).then(function(response) {
 
-      console.log("current temp: " + response.main.temp + " kelvin");
+      $('#displayed-temp-text').text("current temp: " + response.main.temp + " kelvin");
+    }).fail(function(error) {
+      $('#displayed-temp-text').text(error.responseJSON.message);
 
     });
   });
@@ -22,7 +24,9 @@ $(document).ready(function(){
     var city = $('#location').val();
     $.get('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + apiKey).then(function(response) {
 
-      console.log("current humidity: " + response.main.humidity + "%");
+      $('#displayed-humidity-text').text("current humidity: " + response.main.humidity + "%");
+    }).fail(function(error) {
+      $('#displayed-humidity-text').text(error.responseJSON.message);
 
     });
   });
